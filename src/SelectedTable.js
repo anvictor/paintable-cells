@@ -4,7 +4,7 @@ import PaintableCell from "./PaintableCell";
 const daysOfWeek = data.daysOfWeek;
 const hoursOfDay = Array.from({ length: 24 }, (_, i) => i);
 
-const PaintableTable = () => {
+const PaintableTable = ({ getStatus }) => {
   const [paintThisArea, setPaintThisArea] = useState([]);
   const [dragging, setDragging] = useState(false);
   const [startCell, setStartCell] = useState({ day: null, hour: null });
@@ -23,6 +23,25 @@ const PaintableTable = () => {
     if (dragging) {
       setFinishCell({ day, hour });
     }
+  };
+
+  const checkStatus = () => {
+    const PaintableTable = document.getElementById("PaintableTable");
+
+    const body = PaintableTable.children[1].children;
+    const status = [];
+    for (let d = 0; d < body.length; d++) {
+      const day = body[d].cells;
+      let dayArr = [];
+      dayArr.push(body[d].cells[0].innerText);
+      for (let h = 1; h < day.length; h++) {
+        const hour = body[d].cells[h].className === "cell_white" ? null : h - 1;
+        dayArr.push(hour);
+      }
+      status.push(dayArr);
+    }
+
+    return status;
   };
 
   const handleMouseUp = () => {
@@ -92,8 +111,23 @@ const PaintableTable = () => {
     setUnPaintThisArea(difference);
   }, [paintThisArea]);
 
+  useEffect(() => {
+    if (!dragging) {
+      setTimeout(
+        () => getStatus(checkStatus()),
+
+        200
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dragging]);
+
   return (
-    <table onMouseLeave={handleMouseUp} onMouseUp={handleMouseUp}>
+    <table
+      id="PaintableTable"
+      onMouseLeave={handleMouseUp}
+      onMouseUp={handleMouseUp}
+    >
       <thead>
         <tr>
           <th>day\hour</th>
