@@ -1,3 +1,21 @@
+# Problem:
+Make a table of the advertising schedule by days of the week and hours of the day. 
+
+The white color of the cell means no advertising. 
+The red color of the cell means that the ad is working.
+
+The table should change the color of the cells using the mouse.
+Clicking on a cell changes the color of the cell. 
+
+Hovering over multiple cells changes all cells covered by the area to the color of the inverse of the starting cell.
+
+# Problem solved and enhanced:
+Process of covering by area during the hovering shows the old colors of covered cells until mouse up.
+
+Leaving the area of table stops the painting.
+
+Added result visualizer.    
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
